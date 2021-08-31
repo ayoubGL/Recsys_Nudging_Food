@@ -267,6 +267,8 @@ class Unhealthy_ratings(models.Model):
         verbose_name = 'unhealthy_ratings'
         db_table = 'unhealthy_ratings'
 
+
+
 class Recommendations(models.Model):
     id = models.AutoField(primary_key=True)
     person = models.ForeignKey(

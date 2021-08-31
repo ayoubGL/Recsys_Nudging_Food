@@ -235,7 +235,7 @@
         font-weight: 400;
         line-height: 30px;
         font-style: bold; margin-top: 30px;">Understanding your Food Preferences</h3>
-            <h6>Presented below are 10 recipes in your food category. For each recipe, <b>please click the box next to a recipe's title</b> and <b>rate each recipe</b> in terms of how likely you would be to try it (1 star: very unlikely; 5 stars: very likely). Note that you cannot proceed until you have clicked all boxes and rated all recipes. <br><i>Loading the next page may take a few seconds. Thank you for your patience.</i> </h6>
+            <h6>Presented below are 10 recipes in your food category. Please, <b>rate each recipe</b> in terms of how likely you would be to try it (1 star: very unlikely; 5 stars: very likely). Note that you cannot proceed until all recipes are rated <br><b> Loading the next page may take a few seconds</b>. Thank you for your patience. </h6>
             <hr style="  border: 0; 
                 height: 1px; 
                 background-image: linear-gradient(to right, #f0f0f0, #00b9ff, #59d941, #f0f0f0);" />
@@ -244,39 +244,18 @@
         <form action="" method="POST">
 
             {% csrf_token %}
-            <!-- {{first.recipe}} {{first.recipe_rating}}
-            {{second.recipe}} {{second.recipe_rating}} -->
-            <!-- <div>
-                {%for i in first.recipe.field.queryset%}
-                <label for="{{i.id}}">{{first.recipe}} 
-                     {{i.URL}} {{i.image_link}}
-                    
-                    {{first.recipe_rating}} </label>
-
-                {%endfor%}
-            </div>
-            {%for i in second.recipe.field.queryset%}
-            <label for="{{i.id}}"> {{second.recipe}} {{second.recipe_rating}} </label>
-            {%endfor%} -->
-
-
-
-
-
-
-
             <div class="container">
                 <!-- ================= left bar ================= -->
                 <div class="flex-left">
                     <!-- ----------------- f_1-------------------- -->
-                    {%for i in h_f_1.healthy_recipe.field.queryset%}
+                    {%for i in hf_d1%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{h_f_1.healthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -292,6 +271,7 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
+                          
                                 <!------------------------- ERRORS --------------------------->
                                  {% if h_f_1.healthy_rating.errors%}
                                  
@@ -305,14 +285,14 @@
                     </div>
                     {%endfor%}
                     <!-- ----------------- f_2-------------------- -->
-                    {%for i in h_f_2.healthy_recipe.field.queryset%}
+                    {%for i in hf_d2%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{h_f_2.healthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -328,7 +308,7 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                  <!------------------------- ERRORS --------------------------->
+                                <!------------------------- ERRORS --------------------------->
                                  {% if h_f_2.healthy_rating.errors%}
                                  
                                  <b style="color: red;">{{h_f_2.healthy_rating.errors}}</b>
@@ -341,14 +321,14 @@
                     </div>
                     {%endfor%}
                     <!-- ----------------- f_3-------------------- -->
-                    {%for i in h_f_3.healthy_recipe.field.queryset%}
+                    {%for i in hf_d3%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{h_f_3.healthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -364,7 +344,7 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                  <!------------------------- ERRORS --------------------------->
+                                <!------------------------- ERRORS --------------------------->
                                  {% if h_f_3.healthy_rating.errors%}
                                  
                                  <b style="color: red;">{{h_f_3.healthy_rating.errors}}</b>
@@ -372,20 +352,20 @@
                                  {% endif%}
                                  <!------------------------- ERRORS --------------------------->
                                 {{h_f_3.healthy_rating}}
-                            </div>
+                             </div>
 
                         </div>
                     </div>
                     {%endfor%}
                     <!-- ----------------- f_4-------------------- -->
-                    {%for i in h_f_4.healthy_recipe.field.queryset%}
+                    {%for i in hf_d4%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{h_f_4.healthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -401,28 +381,28 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                  <!------------------------- ERRORS --------------------------->
+                                <!-- ---------------------- ERRORS -------------------------- -->
                                  {% if h_f_4.healthy_rating.errors%}
                                  
                                  <b style="color: red;">{{h_f_4.healthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------->
+                                 <!-- ------------------------ ERRORS -------------------------- -->
                                 {{h_f_4.healthy_rating}}
                             </div>
 
                         </div>
                     </div>
                     {%endfor%}
-                    <!-- ----------------- f_5-------------------- -->
-                    {%for i in h_f_5.healthy_recipe.field.queryset%}
+                     <!-- ----------------- f_5--------------------  -->
+                     {%for i in hf_d5%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{h_f_5.healthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -438,31 +418,31 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                  <!------------------------- ERRORS --------------------------->
+                                <!-- ----------------------- ERRORS ------------------------ -->
                                  {% if h_f_5.healthy_rating.errors%}
                                  
                                  <b style="color: red;">{{h_f_5.healthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------->
+                                 <!-- ----------------------- ERRORS ------------------------ -->
                                 {{h_f_5.healthy_rating}}
                             </div>
 
                         </div>
                     </div>
                     {%endfor%}
-                </div>
+                </div> 
 
-                <!-- ================= left bar ================= -->
+                 <!-- ================= right bar =================  --> 
                 <div class="flex-right">
-                    {%for i in unh_f_1.unhealthy_recipe.field.queryset%}
+                    {%for i in unhf_d1%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{unh_f_1.unhealthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -478,27 +458,27 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                  <!------------------------- ERRORS --------------------------->
+                                <!-- ------------------------ ERRORS ----------------------- -->
                                  {% if unh_f_1.unhealthy_rating.errors%}
                                  
                                  <b style="color: red;">{{unh_f_1.unhealthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------->
+                                 <!-- ------------------------ ERRORS --------------------------- -->
                                 {{unh_f_1.unhealthy_rating}}
                             </div>
                         </div>
                     </div>
                     {%endfor%}
-                    <!-- ----------------- f_2-------------------- -->
-                    {%for i in unh_f_2.unhealthy_recipe.field.queryset%}
+                    <!-- - ----------------- f_2--------------------  -->
+                    {%for i in unhf_d2%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{unh_f_2.unhealthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -514,27 +494,27 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                <!------------------------- ERRORS --------------------------->
+                                  <!-- ------------------------ ERRORS -------------------------- -->
                                  {% if unh_f_2.unhealthy_rating.errors%}
                                  
                                  <b style="color: red;">{{unh_f_2.unhealthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------->
+                                 <!-- ------------------------ ERRORS -------------------------- -->
                                 {{unh_f_2.unhealthy_rating}}
                             </div>
                         </div>
                     </div>
                     {%endfor%}
-                    <!-- ----------------- f_3-------------------- -->
-                    {%for i in unh_f_3.unhealthy_recipe.field.queryset%}
+                    <!-- - ----------------- f_3--------------------  -->
+                    {%for i in unhf_d3%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{unh_f_3.unhealthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -550,28 +530,28 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                <!------------------------- ERRORS --------------------------->
+                                  <!-- ------------------------ ERRORS ------------------------ -->
                                  {% if unh_f_3.unhealthy_rating.errors%}
                                  
                                  <b style="color: red;">{{unh_f_3.unhealthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------->
+                                 <!-- ------------------------ ERRORS ------------------------ -->
                                 {{unh_f_3.unhealthy_rating}}
                             </div>
 
                         </div>
                     </div>
                     {%endfor%}
-                    <!-- ----------------- f_4-------------------- -->
-                    {%for i in unh_f_4.unhealthy_recipe.field.queryset%}
+                    <!-- - ----------------- f_4--------------------  -->
+                    {%for i in unhf_d4%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{unh_f_4.unhealthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -587,28 +567,28 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                <!------------------------- ERRORS --------------------------->
+                                  <!-- ------------------------ ERRORS ------------------------- -->
                                  {% if unh_f_4.unhealthy_rating.errors%}
                                  
                                  <b style="color: red;">{{unh_f_4.unhealthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------->
+                                 <!-- ------------------------ ERRORS -------------------------- -->
                                 {{unh_f_4.unhealthy_rating}}
                             </div>
 
                         </div>
                     </div>
                     {%endfor%}
-                    <!-- ----------------- f_5-------------------- -->
-                    {%for i in unh_f_5.unhealthy_recipe.field.queryset%}
+                    <!-- ----------------- f_5--------------------  -->
+                    {%for i in unhf_d5%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{unh_f_5.unhealthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -624,19 +604,19 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                <!------------------------- ERRORS --------------------------->
+                                  <!-- ----------------------- ERRORS ------------------------- -->
                                  {% if unh_f_5.unhealthy_rating.errors%}
                                  
                                  <b style="color: red;">{{unh_f_5.unhealthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------->
+                                 <!-- ----------------------- ERRORS -------------------------- -->
                                 {{unh_f_5.unhealthy_rating}}
                             </div>
 
                         </div>
                     </div>
-                    {%endfor%}
+                    {%endfor%}  
                 </div>
 
             </div>

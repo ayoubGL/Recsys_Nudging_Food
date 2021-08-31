@@ -1,13 +1,12 @@
 from django.contrib import admin
-from import_export.admin import ImportExportModelAdmin
 from django.db.models.base import Model
 from .models import *
 # Register your models here.
 import csv
 from django.http import HttpResponse
-from django.urls import path
-from django import forms
 
+from import_export.admin import ImportExportModelAdmin
+from django import forms
 
 
 class CsvImportForm(forms.Form):
@@ -68,12 +67,9 @@ def export_as_csv_action(description="Export selected objects as CSV file", fiel
 
 # @admin.register(Personal_info)
 class Personal_infoAdmin(admin.ModelAdmin):
-
-    list_display = ('id','session_id','age','gender','country','education','diet_restriction',
-    'diet_goal','cooking_exp','eating_habits', 'created')
+    list_display = ('id','session_id','created','age','gender','country','education','diet_restriction',
+    'diet_goal','cooking_exp','eating_habits')
     actions = [export_as_csv_action("CSV Export")]
-
-  
 
 
 
@@ -82,25 +78,12 @@ class FoodCategoryAdmin(admin.ModelAdmin):
     list_display = ('id','person','session_id','category','created')
     actions = [export_as_csv_action("CSV Export")]
 
-# class RecipesAdmin(admin.ModelAdmin):
-#     list_display = ('id','URL','Name','category','Size','Serving','Calories',
-#     'image_link')
-#     actions = [export_as_csv_action("CSV Export")]
-# class user_ratingsAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'person','Healthyrecipe','UnhealthyRecipe','recipe_rating','created')
-
-# class user_rateAdmin(admin.ModelAdmin):
-#     list_display = ('id', 'person','recipe','recipe_rating','created')
-
 
 class HealthyRecipeAdmin(ImportExportModelAdmin):
-    list_display = ('id','Name','category','Nutri_score','Fsa_new')
+    list_display = ('id','Name','category','Nutri_score','Fsa_new','NumberRatings')
     actions = [export_as_csv_action("CSV Export")]
-
-    
-
 class UnhealthyRecipeAdmin(ImportExportModelAdmin):
-    list_display = ('id','Name','category','Nutri_score','Fsa_new')
+    list_display = ('id','Name','category','Nutri_score','Fsa_new','NumberRatings')
     actions = [export_as_csv_action("CSV Export")]
 
 class healthy_ratingsAdmin(admin.ModelAdmin):
@@ -116,14 +99,16 @@ class unhealthy_ratingsAdmin(admin.ModelAdmin):
     actions = [export_as_csv_action("CSV Export")]
     
 class SelectedRecipeAdmin(admin.ModelAdmin):
-    list_display = ('id','person','session_id','recipe_name','recipe_id','healthiness','Nutri_score','fsa_score','created')
+    list_display = ('id','person','session_id','recipe_name','recipe_id','healthiness','Nutri_score','created')
     actions = [export_as_csv_action("CSV Export")]
 
 class EvaluateChoicesAdmin(admin.ModelAdmin):
     list_display = ('id','person','session_id','recommend_recipe','become_favorite','enjoy_eating',
     'many_to_choose','easy_choice','choice_overwhelming','created')
     actions = [export_as_csv_action("CSV Export")]
-
+class RecommedationsAdmin(admin.ModelAdmin):
+    list_display = ('id','person','recommended_recipes','healthiness', 'created')
+    actions = [export_as_csv_action("CSV Export")]
 
 
 
@@ -132,9 +117,25 @@ admin.site.register(EvaluateChoices, EvaluateChoicesAdmin)
 admin.site.register(SelectedRecipe, SelectedRecipeAdmin)
 admin.site.register(Healthy_ratings, healthy_ratingsAdmin)
 admin.site.register(Unhealthy_ratings, unhealthy_ratingsAdmin)
-# admin.site.register(user_rate, user_rateAdmin)
-# admin.site.register(Recipes, RecipesAdmin)
 admin.site.register(Personal_info, Personal_infoAdmin)
 admin.site.register(FoodCategory, FoodCategoryAdmin)
 admin.site.register(UnhealthyRecipe, UnhealthyRecipeAdmin)
 admin.site.register(HealthyRecipe, HealthyRecipeAdmin)
+admin.site.register(Recommendations, RecommedationsAdmin)
+
+# admin.site.register(user_rate, user_rateAdmin)
+# admin.site.register(Recipes, RecipesAdmin)
+
+# class RecipesAdmin(admin.ModelAdmin):
+#     list_display = ('id','URL','Name','category','Size','Serving','Calories',
+#     'image_link')
+#     actions = [export_as_csv_action("CSV Export")]
+# class user_ratingsAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'person','Healthyrecipe','UnhealthyRecipe','recipe_rating','created')
+
+# class user_rateAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'person','recipe','recipe_rating','created')
+
+
+
+#https://personalizedrecipe2.herokuapp.com/

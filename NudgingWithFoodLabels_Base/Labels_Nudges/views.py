@@ -113,18 +113,18 @@ def rate_recipes(request):
     rcp = []
     un_rcp =[]
      
-    print('session------',request.session['rcp'])
-    print('session un------',request.session['un_rcp'])
+    # print('session------',request.session['rcp'])
+    # print('session un------',request.session['un_rcp'])
     for i in request.session['rcp']:
         rcp.append(HealthyRecipe.objects.filter(id=i))
     for i in request.session['un_rcp']:
         un_rcp.append(UnhealthyRecipe.objects.filter(id=i))
    
-    print(rcp,'----------------')
+    # print(rcp,'----------------')
 
-    print('----------------')
+    # print('----------------')
     
-    print(un_rcp,'----------------')
+    # print(un_rcp,'----------------')
 
 
     if request.method == "POST":
@@ -211,7 +211,7 @@ def rate_recipes(request):
             unh_rating5.unhealthy_recipe_id = un_rcp[4][0].id
             unh_rating5.unhealthy_rating = unh_f_5.cleaned_data.get('unhealthy_rating')
             unh_rating5.save()
-            print('recipes-----, saved',rcp[0][0].Name,'---', rcp[1][0].Name)    
+            # print('recipes-----, saved',rcp[0][0].Name,'---', rcp[1][0].Name)    
             # return HttpResponse([rcp[0][0].Name, rcp[1][0].Name])
             return redirect('Labels_Nudges:recipe_recommendations')
     else:   
