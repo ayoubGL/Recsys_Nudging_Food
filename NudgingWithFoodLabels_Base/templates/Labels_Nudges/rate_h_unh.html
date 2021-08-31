@@ -321,51 +321,14 @@
                     </div>
                     {%endfor%}
                     <!-- ----------------- f_3-------------------- -->
-                    <!-- {%for i in h_f_3.healthy_recipe.field.queryset%}
+                    {%for i in hf_d3%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{h_f_3.healthy_recipe}} </h5>
-                                <div class="recipe_items">
-                                    <div class="items">
-                                        <h6>Calories</h6>
-                                        <h7>{{i.calories_kCal}}</h7>
-                                    </div>
-
-                                    <div class="items">
-                                        <h6>Serving</h6>
-                                        <h7>{{i.Servings}}</h7>
-                                    </div>
-                                    <div class="items">
-                                        <h6>Serving Size</h6>
-                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
-                                    </div>
-                                </div> -->
-                                <!------------------------- ERRORS --------------------------->
-                                 <!-- {% if h_f_3.healthy_rating.errors%} -->
-                                 
-                                 <!-- <b style="color: red;">{{h_f_3.healthy_rating.errors}}</b> -->
-                                 
-                                 <!-- {% endif%} -->
-                                 <!------------------------- ERRORS --------------------------->
-                                <!-- {{h_f_3.healthy_rating}} -->
-                            <!-- </div> -->
-
-                        <!-- </div> -->
-                    <!-- </div> -->
-                    <!-- {%endfor%} -->
-                    <!-- ----------------- f_4-------------------- -->
-                    <!-- {%for i in h_f_4.healthy_recipe.field.queryset%}
-                    <div class="courses-container">
-                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
-                            <div class="course-preview">
-                                <img src="{{i.image_link}}">
-                            </div>
-                            <div class="course-info">
-                                <h5>{{h_f_4.healthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -381,28 +344,65 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                ---------------------- ERRORS --------------------------
+                                <!------------------------- ERRORS --------------------------->
+                                 {% if h_f_3.healthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{h_f_3.healthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{h_f_3.healthy_rating}}
+                             </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_4-------------------- -->
+                    {%for i in hf_d4%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{i.Name}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                <!-- ---------------------- ERRORS -------------------------- -->
                                  {% if h_f_4.healthy_rating.errors%}
                                  
                                  <b style="color: red;">{{h_f_4.healthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 ------------------------ ERRORS --------------------------
+                                 <!-- ------------------------ ERRORS -------------------------- -->
                                 {{h_f_4.healthy_rating}}
                             </div>
 
                         </div>
                     </div>
                     {%endfor%}
-                     ----------------- f_5-------------------- 
-                    {%for i in h_f_5.healthy_recipe.field.queryset%}
+                     <!-- ----------------- f_5--------------------  -->
+                     {%for i in hf_d5%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
                             <div class="course-preview">
                                 <img src="{{i.image_link}}">
                             </div>
                             <div class="course-info">
-                                <h5>{{h_f_5.healthy_recipe}} </h5>
+                                <h5>{{i.Name}} </h5>
                                 <div class="recipe_items">
                                     <div class="items">
                                         <h6>Calories</h6>
@@ -418,20 +418,20 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                ----------------------- ERRORS ------------------------
+                                <!-- ----------------------- ERRORS ------------------------ -->
                                  {% if h_f_5.healthy_rating.errors%}
                                  
                                  <b style="color: red;">{{h_f_5.healthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 ----------------------- ERRORS ------------------------
+                                 <!-- ----------------------- ERRORS ------------------------ -->
                                 {{h_f_5.healthy_rating}}
                             </div>
 
                         </div>
                     </div>
                     {%endfor%}
-                </div> -->
+                </div> 
 
                 <!-- ================= right bar ================= 
                 <div class="flex-right">
@@ -580,7 +580,7 @@
                         </div>
                     </div>
                     {%endfor%}
-                    <!-- ----------------- f_5-------------------- 
+                    ----------------- f_5-------------------- 
                     {%for i in unh_f_5.unhealthy_recipe.field.queryset%}
                     <div class="courses-container">
                         <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
@@ -604,13 +604,13 @@
                                         <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
                                     </div>
                                 </div>
-                                  <!------------------------- ERRORS -------------------------
+                                  ----------------------- ERRORS -------------------------
                                  {% if unh_f_5.unhealthy_rating.errors%}
                                  
                                  <b style="color: red;">{{unh_f_5.unhealthy_rating.errors}}</b>
                                  
                                  {% endif%}
-                                 <!------------------------- ERRORS --------------------------
+                                 ----------------------- ERRORS --------------------------
                                 {{unh_f_5.unhealthy_rating}}
                             </div>
 
