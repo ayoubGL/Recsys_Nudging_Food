@@ -267,18 +267,15 @@ class Unhealthy_ratings(models.Model):
         verbose_name = 'unhealthy_ratings'
         db_table = 'unhealthy_ratings'
 
-# class Recommendations(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     person = models.ForeignKey("app.Model", 
-#         Personal_info,
-#         on_delete=models.CASCADE)
-#     healthy_recipe    
+class Recommendations(models.Model):
+    id = models.AutoField(primary_key=True)
+    person = models.ForeignKey(
+        Personal_info,
+        on_delete=models.CASCADE)
+    recommended_recipes = models.CharField(max_length=500)
+    healthiness = models.CharField(max_length=50)
+    created = models.DateTimeField(auto_now_add=True)
 
-#     def __str__(self):
-#         return 
-
-#     def __unicode__(self):
-#         return 
 
 
 class SelectedRecipe(models.Model):

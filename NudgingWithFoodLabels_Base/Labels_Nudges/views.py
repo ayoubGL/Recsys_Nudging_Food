@@ -16,7 +16,7 @@ from pandas.core.indexes import category
 from pkg_resources import require
 from .forms import Personal_infoForm, FoodCategory, FoodCategoryForm,Healthy_ratingsForm,Unhealthy_ratingsForm,ChoiceEvaluationForm
 # from django.forms import formset_factory, modelformset_factory
-from .models import Personal_info, HealthyRecipe, UnhealthyRecipe,Healthy_ratings,Unhealthy_ratings, SelectedRecipe,EvaluateChoices
+from .models import Personal_info, HealthyRecipe, UnhealthyRecipe,Healthy_ratings,Unhealthy_ratings, SelectedRecipe,EvaluateChoices, Recommendations
 from .app import *
 import string
 from datetime import datetime
@@ -274,7 +274,7 @@ def recipe_recommendations(request):
     h_2_recipe = HealthyRecipe.objects.get(id=id_h_recipes[2])
     h_3_recipe = HealthyRecipe.objects.get(id=id_h_recipes[3])
     h_4_recipe = HealthyRecipe.objects.get(id=id_h_recipes[4])
-    # extract 5 unhhealthy recipes
+    # extract 5 unhealthy recipes
     unh_0_recipe = UnhealthyRecipe.objects.get(id=id_unh_recipes[0])
     unh_1_recipe = UnhealthyRecipe.objects.get(id=id_unh_recipes[1])
     unh_2_recipe = UnhealthyRecipe.objects.get(id=id_unh_recipes[2])
@@ -284,8 +284,15 @@ def recipe_recommendations(request):
     # selected recipe model
     selected_recipe = SelectedRecipe() 
 
-    # initialise healthy forms with extracted data
+
+
+
+
+
+
     if request.method == "POST":
+
+
 
         # if the user already select a recipe
         person = request.session['person_id']
@@ -310,6 +317,19 @@ def recipe_recommendations(request):
         selected_recipe.healthiness = recipe_h
         selected_recipe.session_id = request.session['session_id']
         selected_recipe.save()
+
+            # save recommendations
+        h_recommendations = Recommendations()
+        h_recommendations.person_id = person
+        h_recommendations.recommended_recipes = [h_0_recipe.id,h_1_recipe.id,h_2_recipe.id,h_3_recipe.id,h_4_recipe.id]
+        h_recommendations.healthiness = 'Healthy'
+        h_recommendations.save()
+
+        unh_recommendations = Recommendations()
+        unh_recommendations.person_id = person
+        unh_recommendations.recommended_recipes = [unh_0_recipe.id,unh_1_recipe.id,unh_2_recipe.id,unh_3_recipe.id,unh_4_recipe.id]
+        unh_recommendations.healthiness = 'Unhealthy'
+        unh_recommendations.save()
 
 
         return redirect('Labels_Nudges:choice_evaluation')

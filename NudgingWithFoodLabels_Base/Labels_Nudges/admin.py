@@ -106,7 +106,9 @@ class EvaluateChoicesAdmin(admin.ModelAdmin):
     list_display = ('id','person','session_id','recommend_recipe','become_favorite','enjoy_eating',
     'many_to_choose','easy_choice','choice_overwhelming','created')
     actions = [export_as_csv_action("CSV Export")]
-
+class RecommedationsAdmin(admin.ModelAdmin):
+    list_display = ('id','person','recommended_recipes','healthiness', 'created')
+    actions = [export_as_csv_action("CSV Export")]
 
 
 
@@ -119,7 +121,7 @@ admin.site.register(Personal_info, Personal_infoAdmin)
 admin.site.register(FoodCategory, FoodCategoryAdmin)
 admin.site.register(UnhealthyRecipe, UnhealthyRecipeAdmin)
 admin.site.register(HealthyRecipe, HealthyRecipeAdmin)
-
+admin.site.register(Recommendations, RecommedationsAdmin)
 
 # admin.site.register(user_rate, user_rateAdmin)
 # admin.site.register(Recipes, RecipesAdmin)
