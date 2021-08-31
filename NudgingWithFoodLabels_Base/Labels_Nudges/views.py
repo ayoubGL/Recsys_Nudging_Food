@@ -27,6 +27,9 @@ def home(request):
 
 
 def personal_info(request):
+    user_selected = Personal_info.objects.filter(id = request.session['person_id'])
+    if user_selected:
+        Personal_info.objects.filter(id=request.session['person_id']).delete()
     if request.method == 'POST':
         personl_info = Personal_infoForm(request.POST)
         # per = Personal_info()
@@ -69,6 +72,9 @@ def random_recipes(category):
 
 
 def select_category(request):
+    user_selected = FoodCategory.objects.filter(person_id = request.session['person_id'])
+    if user_selected:
+        FoodCategory.objects.filter(person_id=request.session['person_id']).delete()
     categoryForm = FoodCategoryForm()
     if request.method == "POST":
         categoryForm = FoodCategoryForm(request.POST)
@@ -96,6 +102,14 @@ def select_category(request):
 
 
 def rate_recipes(request): 
+    user_selected = Healthy_ratings.objects.filter(person_id = request.session['person_id'])
+    if user_selected:
+        Healthy_ratings.objects.filter(person_id=request.session['person_id']).delete()
+
+    unh_user_selected = Unhealthy_ratings.objects.filter(person_id = request.session['person_id'])
+    if unh_user_selected:
+        Unhealthy_ratings.objects.filter(person_id=request.session['person_id']).delete()
+
     rcp = []
     un_rcp =[]
      
@@ -114,100 +128,108 @@ def rate_recipes(request):
 
 
     if request.method == "POST":
-        #--------- healthy form ------------
-            h_f_1 = Healthy_ratingsForm(request.POST, prefix = 'h_f_1')
-            h_f_2 = Healthy_ratingsForm(request.POST,prefix = 'h_f_2')
-            h_f_3 = Healthy_ratingsForm(request.POST,prefix = 'h_f_3')
-            h_f_4 = Healthy_ratingsForm(request.POST,prefix = 'h_f_4')
-            h_f_5 = Healthy_ratingsForm(request.POST,prefix = 'h_f_5')
+        # user_selected = Healthy_ratings.objects.filter(person_id = request.session['person_id'])
+        # if user_selected:
+        #     Healthy_ratings.objects.filter(person_id=request.session['person_id']).delete()
+
+        # unh_user_selected = Unhealthy_ratings.objects.filter(person_id = request.session['person_id'])
+        # if unh_user_selected:
+        #     Unhealthy_ratings.objects.filter(person_id=request.session['person_id']).delete()
+    #--------- healthy form ------------
+        h_f_1 = Healthy_ratingsForm(request.POST, prefix = 'h_f_1')
+        h_f_2 = Healthy_ratingsForm(request.POST,prefix = 'h_f_2')
+        h_f_3 = Healthy_ratingsForm(request.POST,prefix = 'h_f_3')
+        h_f_4 = Healthy_ratingsForm(request.POST,prefix = 'h_f_4')
+        h_f_5 = Healthy_ratingsForm(request.POST,prefix = 'h_f_5')
+    
+    #--------- unhealthy form ------------
+        unh_f_1 = Unhealthy_ratingsForm(request.POST, prefix = 'unh_f_1')
+        unh_f_2 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_2')
+        unh_f_3 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_3')
+        unh_f_4 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_4')
+        unh_f_5 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_5')
+    # five healthy objects
+        h_rating1 = Healthy_ratings()
+        h_rating2 = Healthy_ratings()
+        h_rating3 = Healthy_ratings()
+        h_rating4 = Healthy_ratings()
+        h_rating5 = Healthy_ratings()
+    # five unhealthy objects
+        unh_rating1 = Unhealthy_ratings()
+        unh_rating2 = Unhealthy_ratings()
+        unh_rating3 = Unhealthy_ratings()
+        unh_rating4 = Unhealthy_ratings()
+        unh_rating5 = Unhealthy_ratings()
+
+        # valid healthy and unhltheay forms
+        if h_f_1.is_valid() and h_f_2.is_valid() and h_f_3.is_valid() and h_f_4.is_valid() and  h_f_5.is_valid() and unh_f_1.is_valid() and unh_f_2.is_valid() and unh_f_3.is_valid() and unh_f_4.is_valid() and unh_f_5.is_valid() :
+            person = Personal_info.objects.get(id=request.session['person_id'])
+            
+            # --------- current User ----------------
+            h_rating1.person = h_rating2.person = h_rating3.person =h_rating4.person = h_rating5.person = person
+            
+            unh_rating1.person = unh_rating2.person = unh_rating3.person =unh_rating4.person = unh_rating5.person = person
+
+            # rating healthy recipes
+            h_rating1.healthy_recipe_id = rcp[0][0].id
+            h_rating1.healthy_rating = h_f_1.cleaned_data.get('healthy_rating')
+            h_rating1.save()
+            
+            h_rating2.healthy_recipe_id = rcp[1][0].id
+            h_rating2.healthy_rating = h_f_2.cleaned_data.get('healthy_rating')
+            h_rating2.save()
+
+            h_rating3.healthy_recipe_id = rcp[2][0].id
+            h_rating3.healthy_rating = h_f_3.cleaned_data.get('healthy_rating')
+            h_rating3.save()
+
+            h_rating4.healthy_recipe_id = rcp[3][0].id
+            h_rating4.healthy_rating = h_f_4.cleaned_data.get('healthy_rating')
+            h_rating4.save()
+
+            h_rating5.healthy_recipe_id = rcp[4][0].id
+            h_rating5.healthy_rating = h_f_5.cleaned_data.get('healthy_rating')
+            h_rating5.save()
+
+            # --------- unhealthy rating ----------------
+            unh_rating1.unhealthy_recipe_id = un_rcp[0][0].id
+            unh_rating1.unhealthy_rating = unh_f_1.cleaned_data.get('unhealthy_rating')
+            unh_rating1.save()
+            
+            unh_rating2.unhealthy_recipe_id = un_rcp[1][0].id
+            unh_rating2.unhealthy_rating = unh_f_2.cleaned_data.get('unhealthy_rating')
+            unh_rating2.save()
+
+            unh_rating3.unhealthy_recipe_id = un_rcp[2][0].id
+            unh_rating3.unhealthy_rating = unh_f_3.cleaned_data.get('unhealthy_rating')
+            unh_rating3.save()
+
+            unh_rating4.unhealthy_recipe_id = un_rcp[3][0].id
+            unh_rating4.unhealthy_rating = unh_f_4.cleaned_data.get('unhealthy_rating')
+            unh_rating4.save()
+
+            unh_rating5.unhealthy_recipe_id = un_rcp[4][0].id
+            unh_rating5.unhealthy_rating = unh_f_5.cleaned_data.get('unhealthy_rating')
+            unh_rating5.save()
+            print('recipes-----, saved',rcp[0][0].Name,'---', rcp[1][0].Name)    
+            # return HttpResponse([rcp[0][0].Name, rcp[1][0].Name])
+            return redirect('Labels_Nudges:recipe_recommendations')
+    else:   
         
-        #--------- unhealthy form ------------
-            unh_f_1 = Unhealthy_ratingsForm(request.POST, prefix = 'unh_f_1')
-            unh_f_2 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_2')
-            unh_f_3 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_3')
-            unh_f_4 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_4')
-            unh_f_5 = Unhealthy_ratingsForm(request.POST,prefix = 'unh_f_5')
-        # five healthy objects
-            h_rating1 = Healthy_ratings()
-            h_rating2 = Healthy_ratings()
-            h_rating3 = Healthy_ratings()
-            h_rating4 = Healthy_ratings()
-            h_rating5 = Healthy_ratings()
-        # five unhealthy objects
-            unh_rating1 = Unhealthy_ratings()
-            unh_rating2 = Unhealthy_ratings()
-            unh_rating3 = Unhealthy_ratings()
-            unh_rating4 = Unhealthy_ratings()
-            unh_rating5 = Unhealthy_ratings()
+        h_f_1 = Healthy_ratingsForm(prefix = 'h_f_1')
+        h_f_2 = Healthy_ratingsForm(prefix = 'h_f_2')
+        h_f_3 = Healthy_ratingsForm(prefix = 'h_f_3')
+        h_f_4 = Healthy_ratingsForm(prefix = 'h_f_4')
+        h_f_5 = Healthy_ratingsForm(prefix = 'h_f_5')
 
-            # valid healthy and unhltheay forms
-            if h_f_1.is_valid() and h_f_2.is_valid() and h_f_3.is_valid() and h_f_4.is_valid() and h_f_5.is_valid() and unh_f_1.is_valid() and unh_f_2.is_valid() and unh_f_3.is_valid() and unh_f_4.is_valid() and unh_f_5.is_valid() :
-                person = Personal_info.objects.get(id=request.session['person_id'])
-                
-                # --------- current User ----------------
-                h_rating1.person = h_rating2.person = h_rating3.person =h_rating4.person = h_rating5.person = person
-                
-                unh_rating1.person = unh_rating2.person = unh_rating3.person =unh_rating4.person = unh_rating5.person = person
-
-                # rating healthy recipes
-                h_rating1.healthy_recipe_id = rcp[0][0].id
-                h_rating1.healthy_rating = h_f_1.cleaned_data.get('healthy_rating')
-                h_rating1.save()
-                
-                h_rating2.healthy_recipe_id = rcp[1][0].id
-                h_rating2.healthy_rating = h_f_2.cleaned_data.get('healthy_rating')
-                h_rating2.save()
-
-                h_rating3.healthy_recipe_id = rcp[2][0].id
-                h_rating3.healthy_rating = h_f_3.cleaned_data.get('healthy_rating')
-                h_rating3.save()
-
-                h_rating4.healthy_recipe_id = rcp[3][0].id
-                h_rating4.healthy_rating = h_f_4.cleaned_data.get('healthy_rating')
-                h_rating4.save()
-
-                h_rating5.healthy_recipe_id = rcp[4][0].id
-                h_rating5.healthy_rating = h_f_5.cleaned_data.get('healthy_rating')
-                h_rating5.save()
-
-                # --------- unhealthy rating ----------------
-                unh_rating1.unhealthy_recipe_id = un_rcp[0][0].id
-                unh_rating1.unhealthy_rating = unh_f_1.cleaned_data.get('unhealthy_rating')
-                unh_rating1.save()
-                
-                unh_rating2.unhealthy_recipe_id = un_rcp[1][0].id
-                unh_rating2.unhealthy_rating = unh_f_2.cleaned_data.get('unhealthy_rating')
-                unh_rating2.save()
-
-                unh_rating3.unhealthy_recipe_id = un_rcp[2][0].id
-                unh_rating3.unhealthy_rating = unh_f_3.cleaned_data.get('unhealthy_rating')
-                unh_rating3.save()
-
-                unh_rating4.unhealthy_recipe_id = un_rcp[3][0].id
-                unh_rating4.unhealthy_rating = unh_f_4.cleaned_data.get('unhealthy_rating')
-                unh_rating4.save()
-
-                unh_rating5.unhealthy_recipe_id = un_rcp[4][0].id
-                unh_rating5.unhealthy_rating = unh_f_5.cleaned_data.get('unhealthy_rating')
-                unh_rating5.save()
-                print('recipes-----, saved',rcp[0][0].Name,'---', rcp[1][0].Name)    
-                # return HttpResponse([rcp[0][0].Name, rcp[1][0].Name])
-                return redirect('Labels_Nudges:recipe_recommendations')
-    else:           
-            h_f_1 = Healthy_ratingsForm(prefix = 'h_f_1')
-            h_f_2 = Healthy_ratingsForm(prefix = 'h_f_2')
-            h_f_3 = Healthy_ratingsForm(prefix = 'h_f_3')
-            h_f_4 = Healthy_ratingsForm(prefix = 'h_f_4')
-            h_f_5 = Healthy_ratingsForm(prefix = 'h_f_5')
-
-            unh_f_1 = Unhealthy_ratingsForm(prefix = 'unh_f_1')
-            unh_f_2 = Unhealthy_ratingsForm(prefix = 'unh_f_2')
-            unh_f_3 = Unhealthy_ratingsForm(prefix = 'unh_f_3')
-            unh_f_4 = Unhealthy_ratingsForm(prefix = 'unh_f_4')
-            unh_f_5 = Unhealthy_ratingsForm(prefix = 'unh_f_5')
+        unh_f_1 = Unhealthy_ratingsForm(prefix = 'unh_f_1')
+        unh_f_2 = Unhealthy_ratingsForm(prefix = 'unh_f_2')
+        unh_f_3 = Unhealthy_ratingsForm(prefix = 'unh_f_3') 
+        unh_f_4 = Unhealthy_ratingsForm(prefix = 'unh_f_4')
+        unh_f_5 = Unhealthy_ratingsForm(prefix = 'unh_f_5')
             # rcp = request.session['rcp']
-            print(rcp[0][0].Name,'---',rcp[1][0].Name)         
-    return render(request, 'Labels_Nudges/rate_h_unh.html', context={
+            # print(rcp[0][0].Name,'---',rcp[1][0].Name)  
+    context ={
                         'h_f_1': h_f_1, 'hf_d1':rcp[0],
                         'h_f_2':h_f_2, 'hf_d2': rcp[1],
                         'h_f_3':h_f_3, 'hf_d3': rcp[2],
@@ -220,18 +242,17 @@ def rate_recipes(request):
                         'unh_f_4':unh_f_4, 'unhf_d4': un_rcp[3],
                         'unh_f_5':unh_f_5, 'unhf_d5': un_rcp[4],
 
-                        # 'h_f_2': h_f_2, 'unh_f_2':unh_f_2,
-                        # 'h_f_3': h_f_3, 'unh_f_3':unh_f_3, 
-                        # 'h_f_4': h_f_4, 'unh_f_4':unh_f_4, 
-                        # 'h_f_5': h_f_5, 'unh_f_5':unh_f_5
-                        
-                        })
-    
+                    
+                    }        
+    return render(request, 'Labels_Nudges/rate_h_unh.html', context)
+
 
 
 
 
 def recipe_recommendations(request):
+
+
 
     # add rating of current user to rating matrix
     person = request.session['person_id']
@@ -291,14 +312,15 @@ def recipe_recommendations(request):
 
 
     if request.method == "POST":
-
-
-
         # if the user already select a recipe
         person = request.session['person_id']
         user_selected = SelectedRecipe.objects.filter(person_id = person)
         if user_selected:
             SelectedRecipe.objects.filter(person_id=person).delete()
+
+        user_selected = Recommendations.objects.filter(person_id = request.session['person_id'])
+        if user_selected:
+            Recommendations.objects.filter(person_id=request.session['person_id']).delete()
 
         # print('Request POST------------',request.POST)
         recipe_name = request.POST.get('recipe_name')
@@ -376,6 +398,9 @@ def recipe_recommendations(request):
 
 
 def choice_evaluation(request):
+    user_selected = EvaluateChoices.objects.filter(person_id = request.session['person_id'])
+    if user_selected:
+        EvaluateChoices.objects.filter(person_id=request.session['person_id']).delete()
     if request.method == 'POST':
         evaluation_form = ChoiceEvaluationForm(request.POST)
         person = request.session['person_id']
