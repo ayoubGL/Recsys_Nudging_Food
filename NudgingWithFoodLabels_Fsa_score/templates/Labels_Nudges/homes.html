@@ -1,0 +1,62 @@
+{% extends 'Labels_Nudges/main.html'%}
+{%load static%}
+{% block content %}
+
+<div class="header-bar">
+    <!-- <div class="row"> -->
+    <div class="col-lg-2">
+        <img src="{% static 'icon/icon.png'%}" alt="" style=" 
+            width: 160px;">
+    </div>
+    <div>
+        <h1>Personalized Recipes Recommendations </h1>
+    </div>
+    <!-- </div> -->
+</div>
+
+
+<div class="container">
+
+    <h2 style="margin: auto; padding: 20px; text-align: center;">Welcome :)</h2>
+
+
+
+    <p>Welcome to our study! The aim of this study is to understand how we can use technology to suggest new recipes to
+        people, based on their perferences.
+        This study is part of the PhD research of Ayoub El Majjodi
+        at the University of Bergen, Norway, under supervision of Prof. Dr. Christoph Trattner and Dr. Alain Starke.
+        <br>
+        Please carefully read the procedure followed in this study to give your informed consent for voluntary
+        participation*.
+    </p>
+    <b>Procedure</b>
+    <p>You will be first asked to answer a few questions about your personal characteristics and to indicate your
+        preferences for a specific food category by clicking and rating 10 different
+        recipes.
+        <br>
+        Based on your personal preferences, we will then present you a list of recipe recommendations.
+        You will be asked to select the recipe that you like the most and would like to cook at home. Afterwards, you
+        will be asked a few questions about the chosen recipe and the decision-making process.
+    </p>
+    <b>Duration and compensation</b>
+    <p>The study takes around 5-7 minutes to complete. You will be compensated with $ XX. By clicking the 'Start'
+        button, you agree to have read and understood this consent form.</p>
+    <p><b>Note:</b> Due to the complex computations involved, page loading times may vary. 
+        Please bear with us and thank you for you patience</p>
+
+    <div style="text-align: center;">
+        <a type="button" value="Start" class="btn-lg" href="{% url 'Labels_Nudges:personal_info' %}"> Start </a>
+    </div>
+    <hr style="  border: 0; 
+height: 1px; 
+background-image: linear-gradient(to right, #f0f0f0, #00b9ff, #59d941, #f0f0f0);" />
+    <p style="font-size: 14px; padding-top: 10px; padding-bottom: 10px; color: black;"> <i
+            class="bi bi-exclamation-triangle" style="color: red;"></i> The collected information is used for writing
+        scientific publications and is only reported at the group level *.
+        Your Personal information is processed anonymously and it cannot be traced back to you. For questions about the
+        study, please contact the exprimenter, Ayoub El Majjodi: Ayoub.Majjdo@uib.no
+    </p>
+
+</div>
+
+{% endblock%}

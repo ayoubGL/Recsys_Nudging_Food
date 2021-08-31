@@ -1,0 +1,75 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Food Search</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Montserrat:700' rel='stylesheet' type='text/css">
+    <!-- Latest compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <style>
+        @import url(//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css);
+        @import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+    </style>
+    <link rel="stylesheet" href="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/default_thank_you.css">
+    <script src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/jquery-1.9.1.min.js"></script>
+    <script src="https://2-22-4-dot-lead-pages.appspot.com/static/lp918/min/html5shiv.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="{% static 'icon/icon.png'%}">
+
+    <script>
+        function myFunction() {
+            /* Get the text field */
+            var copyText = document.getElementById("myInput");
+
+            /* Select the text field */
+            copyText.select();
+
+            /* Copy the text inside the text field */
+            document.execCommand("copy");
+
+            /* Alert the copied text */
+            alert("Copied the text: " + copyText.value);
+        }
+    </script>
+
+</head>
+
+<body>
+    <header class="site-header" id="header">
+        <h1 class="site-header__title" data-lead-id="site-header-title">THANK YOU!</h1>
+    </header>
+
+    <div class="main-content">
+
+        <p class="main-content__body" data-lead-id="main-content-body">Thanks a bunch for filling that out. We really
+            appreciate you giving us a moment of you time.</p>
+
+
+        <div>
+            <p for="">Please copy & paste the code below to Amazon Mechanical Turk in order to obtain your payment for
+                this HIT!</p>
+
+            <input class='col-6 form-control-lg' type="text" value={{session_id}}  id='myInput' readonly>
+            <button type="submit" class="btn-lg btn-success form-control-lg" onclick="myFunction()">Copy !</button>
+        </div>
+    </div>
+    <footer>
+        <p class="copyright" style="position:relative;
+        color: #e4dcdc;
+        bottom: 0;
+
+        "> &#169; <a href="https://dars.uib.no/"> DARS RESEARCH GROUP</a></p>
+    </footer>
+    <i class="fa fa-thumbs-up main-content__checkmark"></i>
+</body>
+
+</html>

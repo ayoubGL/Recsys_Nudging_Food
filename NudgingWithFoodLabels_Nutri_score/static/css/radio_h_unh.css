@@ -1,0 +1,45 @@
+input#id_h_f_1-healthy_recipe_0,#id_h_f_2-healthy_recipe_0,#id_h_f_3-healthy_recipe_0,#id_h_f_4-healthy_recipe_0,#id_h_f_5-healthy_recipe_0 {
+    border: 0.5px solid black;
+    padding: 0.3em;
+    -webkit-appearance: none;
+}
+
+input#id_unh_f_1-unhealthy_recipe_0,#id_unh_f_2-unhealthy_recipe_0,#id_unh_f_3-unhealthy_recipe_0,#id_unh_f_4-unhealthy_recipe_0,#id_unh_f_5-unhealthy_recipe_0 {
+    border: 0.5px solid black;
+    padding: 0.3em;
+    -webkit-appearance: none;
+}
+
+
+input#id_h_f_1-healthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_h_f_2-healthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_h_f_3-healthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_h_f_4-healthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_h_f_5-healthy_recipe_0:checked::before {
+    content: '✔';
+}
+
+
+input#id_unh_f_1-unhealthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_unh_f_2-unhealthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_unh_f_3-unhealthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_unh_f_4-unhealthy_recipe_0:checked::before {
+    content: '✔';
+}
+input#id_unh_f_5-unhealthy_recipe_0:checked::before {
+    content: '✔';
+}

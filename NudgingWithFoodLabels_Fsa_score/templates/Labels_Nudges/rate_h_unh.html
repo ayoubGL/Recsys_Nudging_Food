@@ -1,0 +1,652 @@
+{%load static %}
+{% load mathfilters %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Food Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/radio_h_unh.css'%}">
+    <!-- Star field -->
+    <!-- <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script> -->
+
+    <link rel="shortcut icon" href="{% static 'icon/icon.png'%}">
+    </script>
+
+
+
+    <style>
+
+
+
+        body {
+            background-image: linear-gradient(-225deg, #B7F8DB 0%, #a1d8e9 100%);
+            /* background: url("{% static 'back/person_info.jpg' %}") no-repeat center center fixed; */
+            /* -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover; */
+            /* background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%); */
+            font-family: 'Nunito', sans-serif;
+            padding-top: 70px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+            padding-bottom: 30px;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            /* justify-content: center; */
+
+        }
+
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            width: 97%;
+            max-height: 20%;
+            margin: auto;
+            border-radius: 12px 12px 12px 12px;
+            -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+            background: #fbfbfb;
+            box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
+        }
+
+        .flex-left {
+            width: 50%;
+            /* height: 100vh; */
+        }
+
+        .flex-right {
+            width: 50%;
+            /* height: 100vh; */
+        }
+
+
+        .btn-lg {
+            border-color: #2c7460 !important;
+            background: #fbfbfb;
+            color: #1f4037;
+            /* padding:15px ; */
+            margin: auto;
+            /* #font-size: 20px; */
+            border: 0.10em solid;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px 8px 8px 8px;
+
+        }
+
+        .btn-lg:hover {
+            background-image: none !important;
+            background-color: #8bbdaf !important;
+            /* background-image: linear-gradient(-225deg, #c8e9da 0%, #bbd8e0 100%); */
+            color: rgb(233, 225, 225);
+
+        }
+
+        /* =---------------- */
+        /* 
+        * {
+            box-sizing: border-box;
+        } */
+
+
+
+
+        /* .courses-container {
+            border-radius: 12px 12px 12px 12px;
+            max-width: 60%;
+
+        } */
+
+        .course {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            width: 97%;
+            height: 17%;
+            /* max-width: 100%; */
+            /* max-height: 100%; */
+            margin: 20px;
+            overflow: hidden;
+            /* width: 700px; */
+        }
+
+        .course-info h5 {
+            color: black;
+            font-weight: bold;
+        }
+
+        .items h6 {
+            color: black;
+            font-weight: bold;
+        }
+
+
+
+        .course-info {
+            padding: 0px;
+            /* position: relative; */
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .recipe_items {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .items {
+            padding: 10px;
+        }
+
+
+        .btn {
+            background-color: #ffff;
+            border: 1px solid black;
+            border-radius: 50px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+            color: black;
+            font-size: 16px;
+            padding: 12px 25px;
+            letter-spacing: 1px;
+            margin: auto;
+            /* margin-bottom: 10px; */
+            /* position: fixed; */
+        }
+
+
+
+        .course-preview img {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            display: block;
+
+        }
+
+        .course-preview {
+            width: 300px;
+            /* border: 5px solid black; */
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .django-starfield:not(:checked)>input {
+            position: absolute;
+            /* top: -9999px; */
+
+        }
+
+
+
+        .django-starfield:not(:checked)>label {
+            width: 1.5em;
+            height: 2em;
+            overflow: hidden;
+            /* white-space: nowrap;
+            cursor: pointer;
+            font-size: 20px; */
+            color: #00f5fd;
+            font-weight: bolder;
+
+
+        }
+
+
+        .django-starfield>input:checked~label {
+            color: #3251d8;
+        }
+
+        /* ------------------*/
+    </style>
+    <script>
+        document.getElementById("id_f_1-recipe_0").checked = true;
+    </script>
+</head>
+
+<body>
+    <div class="flex-column" style="height:100%;">
+        <div>
+            <h3 style="font-size: 40px;
+        font-weight: 400;
+        line-height: 30px;
+        font-style: bold; margin-top: 30px;">Understanding your Food Preferences</h3>
+            <h6>Presented below are 10 recipes in your food category. For each recipe, <b>please click the box next to a recipe's title</b> and <b>rate each recipe</b> in terms of how likely you would be to try it (1 star: very unlikely; 5 stars: very likely). Note that you cannot proceed until you have clicked all boxes and rated all recipes. <br><i>Loading the next page may take a few seconds. Thank you for your patience.</i> </h6>
+            <hr style="  border: 0; 
+                height: 1px; 
+                background-image: linear-gradient(to right, #f0f0f0, #00b9ff, #59d941, #f0f0f0);" />
+        </div>
+
+        <form action="" method="POST">
+
+            {% csrf_token %}
+            <!-- {{first.recipe}} {{first.recipe_rating}}
+            {{second.recipe}} {{second.recipe_rating}} -->
+            <!-- <div>
+                {%for i in first.recipe.field.queryset%}
+                <label for="{{i.id}}">{{first.recipe}} 
+                     {{i.URL}} {{i.image_link}}
+                    
+                    {{first.recipe_rating}} </label>
+
+                {%endfor%}
+            </div>
+            {%for i in second.recipe.field.queryset%}
+            <label for="{{i.id}}"> {{second.recipe}} {{second.recipe_rating}} </label>
+            {%endfor%} -->
+
+
+
+
+
+
+
+            <div class="container">
+                <!-- ================= left bar ================= -->
+                <div class="flex-left">
+                    <!-- ----------------- f_1-------------------- -->
+                    {%for i in h_f_1.healthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{h_f_1.healthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                <!------------------------- ERRORS --------------------------->
+                                 {% if h_f_1.healthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{h_f_1.healthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{h_f_1.healthy_rating}}
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_2-------------------- -->
+                    {%for i in h_f_2.healthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{h_f_2.healthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                  <!------------------------- ERRORS --------------------------->
+                                 {% if h_f_2.healthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{h_f_2.healthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{h_f_2.healthy_rating}}
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_3-------------------- -->
+                    {%for i in h_f_3.healthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{h_f_3.healthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                  <!------------------------- ERRORS --------------------------->
+                                 {% if h_f_3.healthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{h_f_3.healthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{h_f_3.healthy_rating}}
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_4-------------------- -->
+                    {%for i in h_f_4.healthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{h_f_4.healthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                  <!------------------------- ERRORS --------------------------->
+                                 {% if h_f_4.healthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{h_f_4.healthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{h_f_4.healthy_rating}}
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_5-------------------- -->
+                    {%for i in h_f_5.healthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{h_f_5.healthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                  <!------------------------- ERRORS --------------------------->
+                                 {% if h_f_5.healthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{h_f_5.healthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{h_f_5.healthy_rating}}
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+
+                <!-- ================= left bar ================= -->
+                <div class="flex-right">
+                    {%for i in unh_f_1.unhealthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{unh_f_1.unhealthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                  <!------------------------- ERRORS --------------------------->
+                                 {% if unh_f_1.unhealthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{unh_f_1.unhealthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{unh_f_1.unhealthy_rating}}
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_2-------------------- -->
+                    {%for i in unh_f_2.unhealthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{unh_f_2.unhealthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                <!------------------------- ERRORS --------------------------->
+                                 {% if unh_f_2.unhealthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{unh_f_2.unhealthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{unh_f_2.unhealthy_rating}}
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_3-------------------- -->
+                    {%for i in unh_f_3.unhealthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{unh_f_3.unhealthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                <!------------------------- ERRORS --------------------------->
+                                 {% if unh_f_3.unhealthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{unh_f_3.unhealthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{unh_f_3.unhealthy_rating}}
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_4-------------------- -->
+                    {%for i in unh_f_4.unhealthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{unh_f_4.unhealthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                <!------------------------- ERRORS --------------------------->
+                                 {% if unh_f_4.unhealthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{unh_f_4.unhealthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{unh_f_4.unhealthy_rating}}
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+                    <!-- ----------------- f_5-------------------- -->
+                    {%for i in unh_f_5.unhealthy_recipe.field.queryset%}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{i.image_link}}">
+                            </div>
+                            <div class="course-info">
+                                <h5>{{unh_f_5.unhealthy_recipe}} </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{i.calories_kCal}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{i.Servings}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{i.size_g|div:i.Servings|stringformat:".2f"}}</h7>
+                                    </div>
+                                </div>
+                                <!------------------------- ERRORS --------------------------->
+                                 {% if unh_f_5.unhealthy_rating.errors%}
+                                 
+                                 <b style="color: red;">{{unh_f_5.unhealthy_rating.errors}}</b>
+                                 
+                                 {% endif%}
+                                 <!------------------------- ERRORS --------------------------->
+                                {{unh_f_5.unhealthy_rating}}
+                            </div>
+
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+
+            </div>
+            <div style="text-align: right; margin-bottom:40px; margin-top:30px; margin-right: 20px;">
+                <button type="submit " name="submit" class=" btn-lg col-3"> Next </buttton>
+            </div>
+        </form>
+    </div>
+    <!------------------------- Next --------------------------->
+
+    </div>
+
+</body>

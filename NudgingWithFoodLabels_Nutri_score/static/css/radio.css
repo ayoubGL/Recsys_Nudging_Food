@@ -1,0 +1,41 @@
+
+/* Size of stars ---------------------------*/
+input#id_f_1-recipe_0,#id_f_2-recipe_0,#id_f_3-recipe_0,#id_f_5-recipe_0,
+#id_f_4-recipe_0,#id_f_6-recipe_0,#id_f_7-recipe_0,#id_f_8-recipe_0,#id_f_9-recipe_0,#id_f_10-recipe_0{
+    border: 0.5px solid black;
+    padding: 0.3em;
+    -webkit-appearance: none;
+}
+
+input#id_f_1-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_2-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_3-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_4-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_5-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_6-recipe_0:checked::before{
+    content: '✔';
+}
+
+input#id_f_7-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_8-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_9-recipe_0:checked::before{
+    content: '✔';
+}
+input#id_f_10-recipe_0:checked::before{
+    content: '✔';
+} 
+
