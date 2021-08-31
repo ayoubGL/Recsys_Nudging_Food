@@ -1,0 +1,622 @@
+{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Food Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+    <!-- Star field -->
+    <!-- <link rel="stylesheet" href="{% static 'star-ratings/css/star-ratings.css' %}">
+    <script type="text/javascript" src="{% static 'star-ratings/js/dist/star-ratings.min.js' %}"></script> -->
+
+    <link rel="shortcut icon" href="{% static 'icon/icon.png'%}">
+    </script>
+
+
+
+    <style>
+        body {
+            background-image: linear-gradient(-225deg, #B7F8DB 0%, #a1d8e9 100%);
+            /* background: url("{% static 'back/person_info.jpg' %}") no-repeat center center fixed; */
+            /* -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover; */
+            /* background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%); */
+            font-family: 'Nunito', sans-serif;
+            padding-top: 70px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+            padding-bottom: 30px;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            max-width: 100%;
+            max-height: 100%;
+            margin: auto;
+            /* justify-content: center; */
+
+        }
+
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            width: 97%;
+            max-height: 20%;
+            margin: auto;
+            border-radius: 12px 12px 12px 12px;
+            -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+            background: #fbfbfb;
+            box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
+        }
+
+        .flex-left {
+            width: 50%;
+            /* height: 100vh; */
+        }
+
+        .flex-right {
+            width: 50%;
+            /* height: 100vh; */
+        }
+
+
+        .btn-lg {
+            border-color: #2c7460 !important;
+            background: #fbfbfb;
+            color: #1f4037;
+            /* padding:15px ; */
+            margin: auto;
+            /* #font-size: 20px; */
+            border: 0.10em solid;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px 8px 8px 8px;
+
+        }
+
+        .btn-lg:hover {
+            background-image: none !important;
+            background-color: #8bbdaf !important;
+            /* background-image: linear-gradient(-225deg, #c8e9da 0%, #bbd8e0 100%); */
+            color: rgb(233, 225, 225);
+
+        }
+
+
+        .course {
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            width: 80%;
+            height: 10%;
+            /* max-width: 100%; */
+            /* max-height: 100%; */
+            margin: 20px; 
+            overflow: hidden;
+            
+        }
+
+        .course-info h5 {
+            color: black;
+            font-weight: bold;
+        }
+
+        .items h6 {
+            color: black;
+            font-weight: bold;
+        }
+
+
+
+        .course-info {
+            padding: 0px;
+            /* position: relative; */
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            
+        }
+
+        .recipe_items {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .items {
+            padding: 10px;
+        }
+
+
+        .btn {
+            background-color: #ffff;
+            border: 1px solid black;
+            border-radius: 50px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+            color: black;
+            font-size: 16px;
+            padding: 12px 25px;
+            letter-spacing: 1px;
+            margin: auto;
+            /* margin-bottom: 10px; */
+            /* position: fixed; */
+        }
+
+
+
+        .course-preview img {
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            display: block;
+
+        }
+
+        .course-preview {
+            width: 400px;
+            /* border: 5px solid black; */
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .django-starfield:not(:checked)>input {
+            position: absolute;
+            /* top: -9999px; */
+
+        }
+
+
+
+
+        /* ------------------*/
+    </style>
+    <!-- <script>
+        document.getElementById("id_f_1-recipe_0").checked = true;
+    </script> -->
+</head>
+
+<body>
+    <div class="flex-column" style="height:100%;">
+        <div>
+            <h4 style="font-size: 40px;
+        font-weight: 400;
+        line-height: 30px;
+        font-style: bold; margin-top: 30px;">Here we go, Recipes that match your profile are here</h4>
+            <br>
+            <h5><b>Please click <b style="color: green;"> 'Select Recipe'</b> button for the recipe you would like to
+                    cook at home. </h5>
+            <hr style="  border: 0; 
+                height: 1px; 
+                background-image: linear-gradient(to right, #f0f0f0, #00b9ff, #59d941, #f0f0f0);" />
+        </div>
+
+        <div class="container">
+            <!-- ================= left bar ================= -->
+            <div class="flex-left">
+                <!-- -----------------f_1-------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{h_0.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{h_0.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{h_0.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{h_0.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{h_0.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{h_0.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{h_0.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{h_0.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-top: 5px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+                <!------------------------ unh_5 ------------------->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{unh_4.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{unh_4.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{unh_4.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{unh_4.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{unh_4.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{unh_4.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{unh_4.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{unh_4.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+
+                <!-- -----------------h_f_3-------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{h_2.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{h_2.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{h_2.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{h_2.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{h_2.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{h_2.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{h_2.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{h_2.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+                <!-- -----------------h_f_4-------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{h_3.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{h_3.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{h_3.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{h_3.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{h_3.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{h_3.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{h_3.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{h_3.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!------ unh_f_3 --------------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{unh_2.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{unh_2.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{unh_2.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{unh_2.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{unh_2.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{unh_2.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{unh_2.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{unh_2.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                
+               
+            </div>
+
+            <!-- ================= left bar ================= -->
+            <div class="flex-right">
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{unh_0.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{unh_0.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{unh_0.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{unh_0.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{unh_0.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{unh_0.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{unh_0.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{unh_0.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+                <!-- -----------------unh_f_2-------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{unh_1.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{unh_1.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{unh_1.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{unh_1.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{unh_1.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{unh_1.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{unh_1.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{unh_1.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- -----------------h_f_3-------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{h_4.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{h_4.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{h_4.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{h_4.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{h_4.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{h_4.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{h_4.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{h_4.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+
+                <!-- ----------------- unh_f_4-------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{unh_3.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{unh_3.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{unh_3.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{unh_3.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{unh_3.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{unh_3.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{unh_3.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{unh_3.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- -----------------h_f_2-------------------- -->
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="courses-container">
+                        <div class="course" style="border: 0.5px solid rgb(165, 158, 158);">
+                            <div class="course-preview">
+                                <img src="{{h_1.3}}">
+                            </div>
+                            <div class="course-info">
+                                <h5><label for="id_recipe_name">{{h_1.0}}</label>
+                                    <input type="hidden" name="recipe_name" value='{{h_1.0}}' />
+                                    <input type="hidden" name="recipe_id" value='{{h_1.1}}' />
+                                    <input type="hidden" name="healthiness" value='{{h_1.2}}' /> </h5>
+                                <div class="recipe_items">
+                                    <div class="items">
+                                        <h6>Calories</h6>
+                                        <h7>{{h_1.4}}</h7>
+                                    </div>
+
+                                    <div class="items">
+                                        <h6>Serving</h6>
+                                        <h7>{{h_1.5}}</h7>
+                                    </div>
+                                    <div class="items">
+                                        <h6>Serving Size</h6>
+                                        <h7>{{h_1.6}} (g)</h7>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <button type="submit " name="submit" class="btn-lg col-4"
+                                        style="margin-bottom: 3px;"> Select Recipe </buttton>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <!------------------------- Next --------------------------->
+
+    </div>
+
+</body>
+
+

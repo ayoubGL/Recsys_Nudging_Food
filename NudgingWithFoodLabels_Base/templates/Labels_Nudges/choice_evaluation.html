@@ -1,0 +1,286 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Food Search</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+
+    <link rel="shortcut icon" href="{% static 'icon/icon.png'%}">
+
+    <style>
+     
+        body {
+            background-image: linear-gradient(-225deg, #B7F8DB 0%, #a1d8e9 100%);
+            /* background: url("{% static 'back/person_info.jpg' %}") no-repeat center center fixed; */
+            /* -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover; */
+            /* background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%); */
+            font-family: 'Nunito', sans-serif;
+            padding-top: 70px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin: 0 auto;
+            padding-bottom: 30px;
+            min-height: 100vh;
+        }
+
+        .btn-lg {
+            border-color: #2c7460 !important;
+            background: #fbfbfb;
+            color: #1f4037;
+            /* padding:15px ; */
+            margin: auto;
+            /* #font-size: 20px; */
+            border: 0.10em solid;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px 8px 8px 8px;
+
+        }
+
+        .btn-lg:hover {
+            background-image: none !important;
+            background-color: #8bbdaf !important;
+            /* background-image: linear-gradient(-225deg, #c8e9da 0%, #bbd8e0 100%); */
+            color: rgb(233, 225, 225);
+
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: left;
+            max-width: 800px;
+            margin: auto;
+            border-radius: 12px 12px 12px 12px;
+            -webkit-box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+            box-shadow: 2px 2px 13px -4px rgba(0, 0, 0, 0.21);
+            background: #fbfbfb;
+            box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.65);
+
+        }
+
+
+
+        .flabel {
+            display: flex;
+            justify-content: left;
+            align-items: left;
+            padding: auto;
+        }
+
+        .radios {
+            font-weight: bold;
+            color: rgb(12, 130, 248);
+            text-transform: uppercase;
+        }
+
+        #rq {
+            color: #0eaedf;
+        }
+
+        .input {
+
+            height: 15px;
+            width: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+
+        }
+
+        .clabel {
+            color: #34495E;
+            padding: 0.5rem 0.25rem;
+        }
+
+        #error {
+            color: #e73b3b;
+            font-size: 12px !important;
+            text-align: left;
+            display: flex;
+            justify-content: left;
+            align-items: left;
+            padding: auto;
+
+        }
+
+
+
+
+        .hr-sect:after {
+            content: "";
+            flex-grow: 1;
+            background: rgba(0, 0, 0, 0.35);
+            height: 1px;
+            font-size: 0px;
+            line-height: 0px;
+            margin: 0px 8px;
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, #f0f0f0, #00b9ff, #59d941, #f0f0f0);
+        }
+
+
+        h5 {
+            overflow: hidden;
+            text-align: center;
+        }
+
+        h5:before,
+        h5:after {
+            /* background-color: #000; */
+            content: "";
+            display: inline-block;
+            height: 1px;
+            position: relative;
+            vertical-align: middle;
+            width: 50%;
+            background-image: linear-gradient(to right, #f0f0f0, #00b9ff, #59d941, #f0f0f0);
+
+        }
+
+        h5:before {
+            right: 0.5em;
+            margin-left: -50%;
+        }
+
+        h5:after {
+            left: 0.5em;
+            margin-right: -50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div>
+                <h3 style="font-size: 40px;
+            font-weight: 400;
+            line-height: 30px;
+            font-style: bold; margin-top: 30px;">Final Propositions !</h3>
+                <h6>Presented below are propositions about the recipe you have just chosen and the decision-making process. For each proposition, please indicate to what extent you agree with it or not.</h6>
+            </div>
+            <br>
+            <h5> Choice Satisfaction</h5>
+
+            <!-- ------------------------ recommend_recipe -------------------------->
+            <div class="flabel" style="margin-top: 15px; margin-bottom: -2px;">
+                <p><b> {{eval_form.recommend_recipe.label}} </b></p>
+            </div>
+            <div>
+                {{eval_form.recommend_recipe.errors}}
+                {% for radio in eval_form.recommend_recipe%}
+                <label style="padding: 6px; font-weight: 500; margin-left: 12px;" for="{{radio.id_for_label}}">
+
+                    <span> {{radio.tag}}</span> <span class="clabel"> {{radio.choice_label}} </span>
+                </label>
+                {% endfor %}
+            </div>
+
+
+            <div class="flabel" style="margin-top: 15px; margin-bottom: -2px;">
+                <p><b> {{eval_form.become_favorite.label}} </b></p>
+            </div>
+            <div>
+                {{eval_form.become_favorite.errors}}
+                {% for radio in eval_form.become_favorite%}
+                <label style="padding: 6px; font-weight: 500; margin-left: 12px;" for="{{radio.id_for_label}}">
+
+                    <span> {{radio.tag}}</span> <span class="clabel"> {{radio.choice_label}} </span>
+                </label>
+                {% endfor %}
+            </div>
+
+
+            <div class="flabel" style="margin-top: 15px; margin-bottom: -2px;">
+                <p><b> {{eval_form.enjoy_eating.label}} </b></p>
+            </div>
+            <div>
+
+                {{eval_form.enjoy_eating.errors}}
+                {% for radio in eval_form.enjoy_eating%}
+                <label style="padding: 6px; font-weight: 500; margin-left: 12px;" for="{{radio.id_for_label}}">
+
+                    <span> {{radio.tag}}</span> <span class="clabel"> {{radio.choice_label}} </span>
+                </label>
+                {% endfor %}
+
+            </div>
+            <hr style="color: white;">
+            <h5>Choice Difficulty</h5>            
+
+            <div class="flabel" style="margin-top: 15px; margin-bottom: -2px;">
+                <p><b> {{eval_form.many_to_choose.label}} </b></p>
+            </div>
+            <div>
+                {{eval_form.many_to_choose.errors}}
+                {% for radio in eval_form.many_to_choose%}
+                <label style="padding: 6px; font-weight: 500; margin-left: 12px;" for="{{radio.id_for_label}}">
+
+                    <span> {{radio.tag}}</span> <span class="clabel"> {{radio.choice_label}} </span>
+                </label>
+                {% endfor %}
+
+            </div>
+            <div class="flabel" style="margin-top: 15px; margin-bottom: -2px;">
+                <p><b> {{eval_form.easy_choice.label}} </b></p>
+            </div>
+            <div>
+                {{eval_form.easy_choice.errors}}
+                {% for radio in eval_form.easy_choice%}
+                <label style="padding: 6px; font-weight: 500; margin-left: 12px;" for="{{radio.id_for_label}}">
+
+                    <span> {{radio.tag}}</span> <span class="clabel"> {{radio.choice_label}} </span>
+                </label>
+                {% endfor %}
+
+            </div>
+
+            <div class="flabel" style="margin-top: 15px; margin-bottom: -2px;">
+                <p><b> {{eval_form.choice_overwhelming.label}} </b></p>
+            </div>
+            <div>
+                {{eval_form.choice_overwhelming.errors}}
+                {% for radio in eval_form.choice_overwhelming%}
+                <label style="padding: 6px; font-weight: 500; margin-left: 12px;" for="{{radio.id_for_label}}">
+
+                    <span> {{radio.tag}}</span> <span class="clabel"> {{radio.choice_label}} </span>
+                </label>
+                {% endfor %}
+
+            </div>
+
+
+            <hr style="  border: 0; 
+            height: 1px; 
+            background-image: linear-gradient(to right, #f0f0f0, #00b9ff, #59d941, #f0f0f0);" />
+
+            <!------------------------- Next --------------------------->
+            <div style="text-align: right; margin-bottom:30px; margin-top:30px;">
+
+                <button type="submit " name="submit" class="btn-lg col-4"> Finish </buttton>
+            </div>
+
+        </form>
+    </div>
+
+    </div>
+
+</body>
+
+</html>
