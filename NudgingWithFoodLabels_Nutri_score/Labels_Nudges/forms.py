@@ -44,55 +44,19 @@ class FoodCategoryForm(forms.ModelForm):
         }
 
 
-
 class Healthy_ratingsForm(forms.ModelForm):
-    healthy_recipe = forms.ModelChoiceField(queryset=None, required=True, widget=forms.RadioSelect())
-    healthy_rating = forms.IntegerField(required= True, widget=Stars())
-    
-
-    def __init__(self, *args, **kwargs):
-        current_person_category = kwargs.pop('current_person_category')
-        super(Healthy_ratingsForm, self).__init__(*args, **kwargs)
-
-        self.fields['healthy_recipe'].queryset = HealthyRecipe.objects.filter(
-            id = current_person_category
-        )
-
-        self.fields['healthy_recipe']
-        self.fields['healthy_recipe'].label = False
-        self.fields['healthy_rating'].label = False
-        self.fields['healthy_rating'].required = True
-        self.fields['healthy_rating'].error_messages['required'] = 'Please rate this recipe'
-        self.fields['healthy_recipe'].empty_label = None  # remove the empty label
-
+    healthy_rating = forms.IntegerField(required= True, widget=Stars(), error_messages={'required':'Please rate this recipe'}, label='')
     class Meta:
         model=Healthy_ratings
-        exclude=('id', 'person', 'created')
+        exclude=('id', 'person', 'created','session_id','healthy_recipe')
 
 
 class Unhealthy_ratingsForm(forms.ModelForm):
-    unhealthy_recipe = forms.ModelChoiceField(queryset=None, required=True, widget=forms.RadioSelect())
-    unhealthy_rating = forms.IntegerField(required= True, widget=Stars())
-    
-
-    def __init__(self, *args, **kwargs):
-        current_person_category = kwargs.pop('current_person_category')
-        super(Unhealthy_ratingsForm, self).__init__(*args, **kwargs)
-
-        self.fields['unhealthy_recipe'].queryset = UnhealthyRecipe.objects.filter(
-            id = current_person_category
-        )
-
-        self.fields['unhealthy_recipe']
-        self.fields['unhealthy_recipe'].label = False
-        self.fields['unhealthy_rating'].label = False
-        self.fields['unhealthy_rating'].required = True
-        self.fields['unhealthy_rating'].error_messages['required'] = 'Please rate this recipe'
-        self.fields['unhealthy_recipe'].empty_label = None  # remove the empty label
-
+    unhealthy_rating = forms.IntegerField(required= True, widget=Stars(), error_messages={'required':'Please rate this recipe'}, label='')
     class Meta:
         model=Unhealthy_ratings
-        exclude=('id', 'person', 'created')
+        exclude=('id', 'person', 'created','session_id','unhealthy_recipe')
+
 
 
 

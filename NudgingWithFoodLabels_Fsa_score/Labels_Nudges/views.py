@@ -23,6 +23,7 @@ import string
 import random
 
 def home(request):
+    
     return render(request, 'Labels_Nudges/homes.html', context={})
 
 

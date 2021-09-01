@@ -166,6 +166,7 @@ class HealthyRecipe(models.Model):
     satfat_count = models.CharField(max_length=50)
     sugar_count = models.CharField(max_length=50)
     salt_count = models.CharField(max_length=50)
+    NumberRatings = models.IntegerField()
     class Meta:
         verbose_name = 'HealthyRecipe'
         ordering = ['id']
@@ -205,7 +206,7 @@ class UnhealthyRecipe(models.Model):
     satfat_count = models.CharField(max_length=50)
     sugar_count = models.CharField(max_length=50)
     salt_count = models.CharField(max_length=50)
-
+    NumberRatings = models.IntegerField()
     class Meta:
         verbose_name = 'UnhealthyRecipe'
         ordering = ['id']
@@ -265,6 +266,16 @@ class Unhealthy_ratings(models.Model):
         unique_together = (('unhealthy_recipe','person'))
         verbose_name = 'unhealthy_ratings'
         db_table = 'unhealthy_ratings'
+
+class Recommendations(models.Model):
+    id = models.AutoField(primary_key=True)
+    person = models.ForeignKey(
+        Personal_info,
+        on_delete=models.CASCADE)
+    recommended_recipes = models.CharField(max_length=500)
+    healthiness = models.CharField(max_length=50)
+    created = models.DateTimeField(auto_now_add=True)
+
 
 
 
