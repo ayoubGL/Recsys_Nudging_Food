@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'nutridb',
-        'USER':'ayoub',
-        'PASSWORD':'ayoub1234',
+        'USER':'',
+        'PASSWORD':'',
         'HOST':'localhost',
         'PORT':'',
     }
