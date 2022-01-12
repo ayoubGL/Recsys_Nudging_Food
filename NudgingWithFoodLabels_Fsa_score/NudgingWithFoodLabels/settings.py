@@ -90,8 +90,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'fsadb',
-        'USER':'ayoub',
-        'PASSWORD':'ayoub1234',
+        'USER':'',
+        'PASSWORD':'',
         'HOST':'localhost',
         'PORT':'',
     }
