@@ -46,8 +46,8 @@ def add_to_csv(person, category):
     category = category.replace(' ', '_')
     hfile = 'static/rating_matrix/h_'+category+'.csv'
     unhfile = 'static/rating_matrix/unh_'+category+'.csv'
-    # print('------', hfile)
-    # print('------', unhfile)
+    print('------', hfile)
+    print('------', unhfile)
 
     # append new user to csv file
     with open(hfile, 'a') as f:

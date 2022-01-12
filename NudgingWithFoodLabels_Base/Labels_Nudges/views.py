@@ -23,6 +23,7 @@ from datetime import datetime
 
 
 def home(request):
+    request.session['person_id'] = 0
     return render(request, 'Labels_Nudges/homes.html', context={})
 
 
@@ -58,12 +59,12 @@ def personal_info(request):
     return render(request, 'Labels_Nudges/personal_info.html', context={'form': personl_info})
 
 def random_recipes(category):
-    size = len(HealthyRecipe.objects.filter(category = category))
-    ten_pr = size // 10
-    if ten_pr < 5:
-        ten_pr = size // 2
-    h_recipes = HealthyRecipe.objects.filter(category = category).order_by('-NumberRatings').values_list('id', flat=True)[:ten_pr]
-    uh_recipes = UnhealthyRecipe.objects.filter(category = category).order_by('-NumberRatings').values_list('id',flat=True)[:ten_pr]
+    # size = len(HealthyRecipe.objects.filter(category = category))
+    # # ten_pr = size // 10
+    # # if ten_pr < 5:
+    # #     ten_pr = size // 2
+    h_recipes = HealthyRecipe.objects.filter(category = category).order_by('-NumberRatings').values_list('id', flat=True)
+    uh_recipes = UnhealthyRecipe.objects.filter(category = category).order_by('-NumberRatings').values_list('id',flat=True)
     # print(f'len ------------------------- {len(h_recipes)} {size}')
     # unh_recipes = UnhealthyRecipe.objects.filter(category = category).order_by('-NumberRatings').values_list('id', flat=True)[:ten_pr]
     h_5 = sample(list(h_recipes), 5)
@@ -87,7 +88,7 @@ def select_category(request):
             user_category = FoodCategory.objects.filter(
             person_id=request.session['person_id']).values_list('category', flat=True)
             user_category = user_category[0]
-            # print('categoruy=====', user_category)
+            print('categoruy=====', user_category)
             recipes, un_recipes = random_recipes(user_category)
 
             request.session['rcp'] = recipes
@@ -251,20 +252,14 @@ def rate_recipes(request):
 
 
 def recipe_recommendations(request):
-
-
-
+    print('enter----------------')
     # add rating of current user to rating matrix
     person = request.session['person_id']
     user_category = FoodCategory.objects.filter(
         person_id=request.session['person_id']).values_list('category', flat=True)
     user_category = user_category[0]
     target_user = add_to_csv(person, category=user_category)
-    # unh_recipe5 = UnhealthyRecipe.objects.filter(
-    #     category = user_category).values_list('id',flat=True)[4:5]
 
-    # print('add-----------', target_user)
-    # print('category----------', user_category)
 
     # get recommendation
     recom_size = 5
@@ -272,8 +267,7 @@ def recipe_recommendations(request):
     unhtop_n_for_target_user = []
     htop_n_for_target_user,unhtop_n_for_target_user = get_top_n_for_user(person,recom_size, user_category)
     
-    # print('-----------HT',htop_n_for_target_user)
-    # print('-----------Unht',unhtop_n_for_target_user)
+    
 
     # get recipe info and send them to tmeplate
     id_h_recipes = [] 
@@ -286,8 +280,8 @@ def recipe_recommendations(request):
     # for i in unhtop_n_for_target_user:
     #     id_unh_recipes.append(i[0])
 
-    # print(f'-------healthy_ids: {id_h_recipes}')
-    # print(f'--------unhealthy_ids: {id_unh_recipes}')
+    print(f'-------healthy_ids: {id_h_recipes}')
+    print(f'--------unhealthy_ids: {id_unh_recipes}')
     
     # extract 5 healthy recipes
     h_0_recipe = HealthyRecipe.objects.get(id=id_h_recipes[0])
@@ -304,13 +298,9 @@ def recipe_recommendations(request):
     
     # selected recipe model
     selected_recipe = SelectedRecipe() 
-
-
-
-
-
-
-
+    h_recommendations = Recommendations()
+    unh_recommendations = Recommendations()
+    print('request-------------', request.method)
     if request.method == "POST":
         # if the user already select a recipe
         person = request.session['person_id']
@@ -322,11 +312,13 @@ def recipe_recommendations(request):
         if user_selected:
             Recommendations.objects.filter(person_id=request.session['person_id']).delete()
 
-        # print('Request POST------------',request.POST)
+        
         recipe_name = request.POST.get('recipe_name')
         recipe_id = request.POST.get('recipe_id')
         recipe_h  = request.POST.get('healthiness')
-
+        
+        
+        
         if recipe_h == 'healthy':
             nutri__fsa = HealthyRecipe.objects.filter(id=recipe_id).values_list('Nutri_score', 'Fsa_new',)
         else:
@@ -339,20 +331,24 @@ def recipe_recommendations(request):
         selected_recipe.healthiness = recipe_h
         selected_recipe.session_id = request.session['session_id']
         selected_recipe.save()
+        
+        
 
-            # save recommendations
-        h_recommendations = Recommendations()
+        
         h_recommendations.person_id = person
         h_recommendations.recommended_recipes = [h_0_recipe.id,h_1_recipe.id,h_2_recipe.id,h_3_recipe.id,h_4_recipe.id]
         h_recommendations.healthiness = 'Healthy'
         h_recommendations.save()
 
-        unh_recommendations = Recommendations()
+        
+
+        
         unh_recommendations.person_id = person
         unh_recommendations.recommended_recipes = [unh_0_recipe.id,unh_1_recipe.id,unh_2_recipe.id,unh_3_recipe.id,unh_4_recipe.id]
         unh_recommendations.healthiness = 'Unhealthy'
         unh_recommendations.save()
 
+        
 
         return redirect('Labels_Nudges:choice_evaluation')
     else:

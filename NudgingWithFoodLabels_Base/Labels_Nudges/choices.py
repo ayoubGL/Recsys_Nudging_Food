@@ -72,11 +72,11 @@ foodCategories =[
     (None, ''),
     # ('Salad','Salad'),
     ('Fruits and Vegetables','Fruits and Vegetables'),
-    ('Seafood','Seafood'),
     ('Meat and Poultry','Meat and Poultry'),
-    ('Pasta and Noodles','Pasta and Noodles'),
     # ('Soups and Chili','Soups and Chili'),
     ('Barbecue','Barbecue'),
+    #('Seafood','Seafood'),
+    ('Seafood Pasta and Noodles','Seafood Pasta and Noodles'),
 ]
 
 (Str_D,Str_N)= ('Strongly_Disagree','Strongly Disagree')

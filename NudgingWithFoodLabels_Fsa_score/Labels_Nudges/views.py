@@ -23,7 +23,7 @@ import string
 import random
 
 def home(request):
-    
+    request.session['person_id'] = 0
     return render(request, 'Labels_Nudges/homes.html', context={})
 
 
@@ -321,11 +321,6 @@ def recipe_recommendations(request):
         if user_selected:
             Recommendations.objects.filter(person_id=request.session['person_id']).delete()
 
-        # if the user already select a recipe
-        person = request.session['person_id']
-        user_selected = SelectedRecipe.objects.filter(person_id = person)
-        if user_selected:
-            SelectedRecipe.objects.filter(person_id=person).delete()
 
         # print('Request POST------------',request.POST)
         recipe_name = request.POST.get('recipe_name')
